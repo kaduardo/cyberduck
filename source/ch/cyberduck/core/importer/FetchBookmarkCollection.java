@@ -1,0 +1,88 @@
+package ch.cyberduck.core.importer;
+
+/*
+ * Copyright (c) 2002-2010 David Kocher. All rights reserved.
+ *
+ * http://cyberduck.ch/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Bug fixes, suggestions and comments should be sent to:
+ * dkocher@cyberduck.ch
+ */
+
+import ch.cyberduck.core.Host;
+import ch.cyberduck.core.Preferences;
+import ch.cyberduck.core.local.Local;
+import ch.cyberduck.core.local.LocalFactory;
+import ch.cyberduck.core.serializer.impl.PlistDeserializer;
+import ch.cyberduck.ui.cocoa.foundation.NSDictionary;
+
+import org.apache.log4j.Logger;
+
+import java.util.List;
+
+/**
+ * @version $Id: FetchBookmarkCollection.java 10226 2012-10-15 17:30:25Z dkocher $
+ */
+public class FetchBookmarkCollection extends ThirdpartyBookmarkCollection {
+    private static Logger log = Logger.getLogger(FetchBookmarkCollection.class);
+
+    private static final long serialVersionUID = -7544710198776572190L;
+
+    @Override
+    public String getBundleIdentifier() {
+        return "com.fetchsoftworks.Fetch";
+    }
+
+    @Override
+    public Local getFile() {
+        return LocalFactory.createLocal(Preferences.instance().getProperty("bookmark.import.fetch.location"));
+    }
+
+    @Override
+    protected void parse(Local file) {
+        NSDictionary serialized = NSDictionary.dictionaryWithContentsOfFile(file.getAbsolute());
+        if(null == serialized) {
+            log.error("Invalid bookmark file:" + file);
+            return;
+        }
+        NSDictionary dict = new PlistDeserializer(serialized).objectForKey("Shortcuts v2");
+        if(null == dict) {
+            log.error("Invalid bookmark file:" + file);
+            return;
+        }
+        dict = new PlistDeserializer(dict).objectForKey("Shortcuts");
+        if(null == dict) {
+            log.error("Invalid bookmark file:" + file);
+            return;
+        }
+        List<NSDictionary> shortcuts = new PlistDeserializer(dict).listForKey("Shortcuts");
+        for(NSDictionary shortcut : shortcuts) {
+            PlistDeserializer reader = new PlistDeserializer(shortcut);
+            NSDictionary remote = reader.objectForKey("Remote Item");
+            if(null == remote) {
+                continue;
+            }
+            NSDictionary location = new PlistDeserializer(remote).objectForKey("Location");
+            if(null == location) {
+                continue;
+            }
+            String url = new PlistDeserializer(location).stringForKey("URL");
+            if(null == url) {
+                continue;
+            }
+            final Host host = Host.parse(url);
+            host.setNickname(reader.stringForKey("Name"));
+            this.add(host);
+        }
+    }
+}

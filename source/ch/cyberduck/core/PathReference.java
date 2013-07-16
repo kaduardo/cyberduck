@@ -1,0 +1,53 @@
+package ch.cyberduck.core;
+
+/*
+ * Copyright (c) 2009 David Kocher. All rights reserved.
+ * http://cyberduck.ch/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * Bug fixes, suggestions and comments should be sent to:
+ * dkocher@cyberduck.ch
+ */
+
+/**
+ * @version $Id: PathReference.java 9901 2012-10-07 21:46:23Z dkocher $
+ */
+public abstract class PathReference<T> {
+
+    public abstract T unique();
+
+    @Override
+    public int hashCode() {
+        return this.unique().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.unique().toString();
+    }
+
+    /**
+     * Comparing the hashcode.
+     *
+     * @see #hashCode()
+     */
+    @Override
+    public boolean equals(Object other) {
+        if(null == other) {
+            return false;
+        }
+        if(other instanceof PathReference) {
+            return this.hashCode() == other.hashCode();
+        }
+        return false;
+    }
+}

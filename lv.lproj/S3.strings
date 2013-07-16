@@ -1,0 +1,74 @@
+"S3 (Amazon Simple Storage Service)" = "S3 (Amazon vienkāršas uzglabāšanas serviss)";
+
+/* Use your Access Key ID as the value of the AWSAccessKeyId parameter in requests you send to Amazon Web Services (when required). Your Access Key ID identifies you as the party responsible for the request. */
+"Access Key ID" = "Piekļuves atslēgas apliecība";
+
+/* Since your Access Key ID is not encrypted in requests to AWS, it could be discovered and used by anyone. Services that are not free require you to provide additional information, a request signature, to verify that a request containing your unique Access Key ID could only have come from you. */
+"Secret Access Key" = "Slepenais piekļuves kods";
+
+/* The current status of the distribution. When the status is Deployed, the distribution's information is fully propagated throughout the Amazon CloudFront system. */
+"InProgress" = "Virzās uz priekšu";
+
+/* The current status of the distribution. When the status is Deployed, the distribution's information is fully propagated throughout the Amazon CloudFront system. */
+"Deployed" = "Izvietots";
+
+"EU" = "EU (Īrija)";
+"US" = "ASV standarts";
+"us-west-1" = "ASV-Rietumu (Ziemeļ Kalifornija)";
+"us-west-2" = "US West (Oregon)";
+"ap-southeast-1" = "Āzija un Klusais okeāns (Singapore)";
+"ap-northeast-1" = "Asia Pacific (Tokyo)";
+"sa-east-1" = "South America (Sao Paulo)";
+"ap-southeast-2" = "Asia Pacific (Sydney)";
+
+/* Delivery methods including streaming protocols. */ 
+"Download (HTTP)" = "Lejuplāde (HTTP) CDN";
+"Streaming (RTMP)" = "Straumēšana (RTMP) CDN";
+"Custom Origin Server (HTTP/HTTPS)" = "Custom Origin Server (HTTP/HTTPS) CDN";
+
+/* S3 Website Configuration (HTTP) with index document */
+"Website Configuration (HTTP)" = "Website Configuration (HTTP)";
+"NoSuchWebsiteConfiguration" = "The specified bucket does not have a website configuration";
+
+/* Storage class */
+"STANDARD" = "Pastāvīgā Amazon S3 glabātuve";
+"REDUCED_REDUNDANCY" = "Samazināta līdzīgo datu glabātuve (RRS)";
+
+/* Google Login Credentials */
+"Google Account Email" = "Google konta e-pasts";
+"Google Account Password" = "Google konta kods";
+
+/* MFA */
+"Multi-Factor Authentication" = "Multi-Faktoru autentificēšana";
+"MFA Serial Number" = "MFA seriāla nummurs";
+"MFA Authentication Code" = "MFA autentifikācijas kods";
+
+/* ACL Editing */
+"Canonical User ID" = "Kanoniskā lietotāja ID";
+"Email Address" = "E-pasta adrese";
+
+/* Amazon Related ACL Scopes */
+"Amazon Customer Email Address" = "Amazon Customer Email Address";
+
+/* Google Storage Related ACL Scopes */
+"Google Account Email Address" = "Google Account Email Address";
+"Google Group Email Address" = "Google Group Email Address";
+"Google Apps Domain" = "Google Apps Domain";
+
+"http://acs.amazonaws.com/groups/global/AllUsers" ="Everyone";
+"http://acs.amazonaws.com/groups/s3/LogDelivery" = "Log Delivery";
+"AllUsers" ="Everyone";
+"AllAuthenticatedUsers" = "Google Account Holders";
+
+/* Signed URL Expiry */
+"Signed" = "Signed";
+"Expires on {0}" = "Expires on {0}";
+
+/* HTTP Metadata */
+"Custom Header" = "Custom Header";
+
+/* CloudFront object invalidation */
+"{0} invalidations in progress" = "{0} invalidations in progress";
+"{0} invalidations completed" = "{0} invalidations completed";
+
+"Bucket name is not DNS compatible" = "Bucket name is not DNS compatible";
