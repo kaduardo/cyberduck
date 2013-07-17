@@ -94,6 +94,25 @@ public abstract class SessionFactory {
                             }
                         });
                         break;
+					case swiftkeystone:
+						 factories.put(p, new SessionFactory() {
+                            @Override
+                            protected Session create(Host h) {
+                                return new CFSession(h);
+								//return new CFSessionKeystone(h);
+                            }
+                        });
+					break;
+					case swiftfederatedkeystone:
+					factories.put(p, new SessionFactory() {
+						@Override
+						protected Session create(Host h) {
+							throw new FactoryException(String.format("No factory for protocol %s", p));
+							//return new CFSession(h);
+							//return new CFSessionKeystoneFederated(h);
+						}
+					});
+				   break;
                     default:
                         throw new FactoryException(String.format("No factory for protocol %s", p));
                 }

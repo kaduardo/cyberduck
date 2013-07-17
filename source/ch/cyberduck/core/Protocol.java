@@ -233,6 +233,8 @@ public abstract class Protocol {
         s3,
         googlestorage,
         swift,
+		swiftkeystone,
+		swiftfederatedkeystone,
         dav
     }
 
@@ -800,4 +802,107 @@ public abstract class Protocol {
             return StringUtils.isNotBlank(credentials.getUsername());
         }
     };
-}
+    public static final Protocol SWIFT_KEYSTONE = new Protocol() {
+        @Override
+        public String getName() {
+            return Locale.localizedString("SwiftKeystone", "Mosso");
+        }
+
+        @Override
+        public String getDescription() {
+            return Locale.localizedString("Swift (Keystone)", "Mosso");
+        }
+
+        @Override
+        public String getIdentifier() {
+            return "swiftkeystone";
+        }
+
+        @Override
+        public Scheme getScheme() {
+            return Scheme.https;
+        }
+
+        @Override
+        public String[] getSchemes() {
+            return new String[]{this.getScheme().name(), "swift"};
+        }
+
+        @Override
+        public boolean isHostnameConfigurable() {
+            return true;
+        }
+
+        @Override
+        public String getDefaultHostname() {
+            return "pinga.ect.ufrn.br";
+        }
+
+        @Override
+        public boolean isWebUrlConfigurable() {
+            return false;
+        }
+
+        @Override
+        public boolean isAnonymousConfigurable() {
+            return false;
+        }
+
+        @Override
+        public String getPasswordPlaceholder() {
+            return Locale.localizedString("API Access Key", "Mosso");
+        }
+    };
+	public static final Protocol SWIFT_FEDERATED_KEYSTONE = new Protocol() {
+        @Override
+        public String getName() {
+            return Locale.localizedString("SwiftFederatedKeystone", "Mosso");
+        }
+
+        @Override
+        public String getDescription() {
+            return Locale.localizedString("Swift (Federated Keystone)", "Mosso");
+        }
+
+        @Override
+        public String getIdentifier() {
+            return "swiftfederatedkeystone";
+        }
+
+        @Override
+        public Scheme getScheme() {
+            return Scheme.https;
+        }
+
+        @Override
+        public String[] getSchemes() {
+            return new String[]{this.getScheme().name(), "swift"};
+        }
+
+        @Override
+        public boolean isHostnameConfigurable() {
+            return true;
+        }
+
+        @Override
+        public String getDefaultHostname() {
+            return "pinga.ect.ufrn.br";
+        }
+
+        @Override
+        public boolean isWebUrlConfigurable() {
+            return false;
+        }
+
+        @Override
+        public boolean isAnonymousConfigurable() {
+            return false;
+        }
+
+        @Override
+        public String getPasswordPlaceholder() {
+            return Locale.localizedString("API Access Key", "Mosso");
+        }
+    };
+
+	}

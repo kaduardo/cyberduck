@@ -49,6 +49,7 @@
     <property name="www.help" value="${www}/help"/>
 
     <property name="sonar.host" value="sonar.cyberduck.ch"/>
+    <property name="svn.revision" value="11012"/>
 
     <condition property="platform" value="mac">
         <os family="mac"/>
