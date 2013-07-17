@@ -31,6 +31,7 @@ import ch.cyberduck.core.threading.BackgroundException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+
 import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.net.SocketException;
@@ -39,6 +40,7 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -909,4 +911,13 @@ public abstract class Session implements TranscriptListener {
     public String toString() {
         return String.format("Session %s", host.toURL());
     }
+	//Metodos para teste de interface
+	public List<String> getIdps(){
+		List<String> idpList = new ArrayList<String>();
+		idpList.add("idp.ufrn.br");
+		idpList.add("idp.ufpa.br");
+		idpList.add("idp.ufcg.br");
+		return idpList;
+	} 
+	
 }

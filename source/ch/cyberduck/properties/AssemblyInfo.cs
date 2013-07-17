@@ -21,7 +21,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("© 2010-2011 Yves Langisch. All rights reserved.")]
 [assembly: ComVisible(false)]
 [assembly: Guid("5fc1c120-24c7-469d-b52b-9bce20db208d")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("4.3.1.11012")]
+[assembly: AssemblyFileVersion("4.3.1.11012")]
+[assembly: AssemblyInformationalVersion("4.3.1 (11012)")]
 
 

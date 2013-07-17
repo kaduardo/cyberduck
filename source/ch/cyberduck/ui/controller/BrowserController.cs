@@ -2490,6 +2490,7 @@ namespace Ch.Cyberduck.Ui.Controller
                     // The browser has no session, we are allowed to proceed
                     // Initialize the browser with the new session attaching all listeners
                     Session session = Init(host);
+                    if(session != null)
                     background(new MountAction(this, session, host));
                 };
             Unmount(callbackDelegate);
@@ -2508,7 +2509,24 @@ namespace Ch.Cyberduck.Ui.Controller
                 _session.removeProgressListener(_progress);
                 _session.removeConnectionListener(_listener);
             }
+            
             _session = SessionFactory.createSession(host);
+            
+            if (String.Compare(host.getProtocol().getIdentifier(), "swiftkeystonefederated") == 0) {
+                //Pegando lista de idps
+                java.util.List idPList = _session.getIdps();
+                
+                //Exibindo Dialog
+                ui.winforms.SelectIdp dlgSelectIdP = new ui.winforms.SelectIdp(idPList);
+                dlgSelectIdP.StartPosition = FormStartPosition.CenterParent;
+                DialogResult resultfederado = dlgSelectIdP.ShowDialog();
+                if (resultfederado != DialogResult.OK)
+                {
+                    return null;    
+                }
+
+                System.Windows.Forms.MessageBox.Show(dlgSelectIdP.IdPServer);   
+            }
             SetWorkdir(null);
             View.SelectedEncoding = _session.getEncoding();
             _session.addProgressListener(_progress = new ProgessListener(this));
@@ -3445,7 +3463,13 @@ namespace Ch.Cyberduck.Ui.Controller
             public override void run()
             {
                 // Mount this session
-                _mount = _session.mount();
+                try
+                {
+                    _mount = _session.mount();
+                }
+                catch (Exception e) {
+                    System.Windows.Forms.MessageBox.Show(e.Message);
+                }
             }
 
             public override void cleanup()

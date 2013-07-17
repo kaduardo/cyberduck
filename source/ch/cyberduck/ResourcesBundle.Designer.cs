@@ -369,6 +369,16 @@ namespace Ch.Cyberduck {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kgpg_identity_kgpg {
+            get {
+                object obj = ResourceManager.GetObject("kgpg_identity_kgpg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap language {
             get {
                 object obj = ResourceManager.GetObject("language", resourceCulture);
@@ -689,9 +699,9 @@ namespace Ch.Cyberduck {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap swiftfederatedkeystone {
+        internal static System.Drawing.Bitmap swiftkeystone {
             get {
-                object obj = ResourceManager.GetObject("swiftfederatedkeystone", resourceCulture);
+                object obj = ResourceManager.GetObject("swiftkeystone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -699,9 +709,9 @@ namespace Ch.Cyberduck {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap swiftkeystone {
+        internal static System.Drawing.Bitmap swiftkeystonefederated {
             get {
-                object obj = ResourceManager.GetObject("swiftkeystone", resourceCulture);
+                object obj = ResourceManager.GetObject("swiftkeystonefederated", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
