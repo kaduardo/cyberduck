@@ -57,7 +57,7 @@ import com.rackspacecloud.client.cloudfiles.FilesException;
  *
  * @version $Id: CFSessionKeystone.java 10823 2013-04-08 17:31:39Z dkocher $
  */
-public class CFSessionKeystone extends CloudSession implements DistributionConfiguration {
+public class CFSessionKeystone extends CFSession implements DistributionConfiguration {
     private static final Logger log = Logger.getLogger(CFSessionKeystone.class);
 
     private FilesClientKeystone client;
@@ -96,6 +96,7 @@ public class CFSessionKeystone extends CloudSession implements DistributionConfi
      *
      * @throws java.io.IOException If the connection is already canceled
      */
+	
     protected void configure() throws IOException {
         final FilesClientKeystone c = this.getClient();
         c.setConnectionTimeOut(this.timeout());
@@ -104,8 +105,8 @@ public class CFSessionKeystone extends CloudSession implements DistributionConfi
         c.setUseETag(false);
         c.setAuthenticationURL(this.getAuthenticationUrl());
     }
-
-    private String getAuthenticationUrl() {
+	
+	    private String getAuthenticationUrl() {
         final StringBuilder authentication = new StringBuilder();
         authentication.append(host.getProtocol().getScheme().toString()).append("://");
         if(host.getHostname().equals("storage.clouddrive.com")) {
@@ -148,242 +149,5 @@ public class CFSessionKeystone extends CloudSession implements DistributionConfi
         }
     }
 
-    @Override
-    public void close() {
-        try {
-            if(this.isConnected()) {
-                this.fireConnectionWillCloseEvent();
-            }
-        }
-        finally {
-            // No logout required
-            client = null;
-            this.fireConnectionDidCloseEvent();
-        }
-    }
-
-    /**
-     * @return No Content-Range support
-     */
-    @Override
-    public boolean isUploadResumable() {
-        return false;
-    }
-
-    @Override
-    public boolean isRenameSupported(final Path file) {
-        return !file.attributes().isVolume();
-    }
-
-    /**
-     * Creating files is only possible inside a bucket.
-     *
-     * @param workdir The workdir to create query
-     * @return False if directory is root.
-     */
-    @Override
-    public boolean isCreateFileSupported(final Path workdir) {
-        return !workdir.isRoot();
-    }
-
-    @Override
-    public boolean isChecksumSupported() {
-        return true;
-    }
-
-    @Override
-    public boolean isCDNSupported() {
-        try {
-            return StringUtils.isNotBlank(this.getClient().getCdnManagementURL());
-        }
-        catch(ConnectionCanceledException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public DistributionConfiguration cdn() {
-        return this;
-    }
-
-    /**
-     * Cache distribution status result.
-     */
-    private Map<String, Distribution> distributionStatus
-            = new HashMap<String, Distribution>();
-
-
-    @Override
-    public boolean isCached(Distribution.Method method) {
-        return !distributionStatus.isEmpty();
-    }
-
-    @Override
-    public String getOrigin(Distribution.Method method, String container) {
-        return container;
-    }
-
-    @Override
-    public void write(final boolean enabled, final String origin, final Distribution.Method method,
-                      final String[] cnames, final boolean logging, final String loggingBucket, final String defaultRootObject) {
-        try {
-            this.check();
-            if(enabled) {
-                this.message(MessageFormat.format(Locale.localizedString("Enable {0} Distribution", "Status"), "CDN"));
-            }
-            else {
-                this.message(MessageFormat.format(Locale.localizedString("Disable {0} Distribution", "Status"), "CDN"));
-            }
-            if(StringUtils.isNotBlank(defaultRootObject)) {
-                this.getClient().updateContainerMetadata(origin, Collections.singletonMap("Web-Index", defaultRootObject));
-            }
-            try {
-                this.getClient().getCDNContainerInfo(origin);
-            }
-            catch(FilesException e) {
-                if(404 == e.getHttpStatusCode()) {
-                    // Not found.
-                    this.getClient().cdnEnableContainer(origin);
-                }
-            }
-            // Toggle content distribution for the container without changing the TTL expiration
-            this.getClient().cdnUpdateContainer(origin, -1, enabled, logging);
-        }
-        catch(IOException e) {
-            this.error("Cannot write CDN configuration", e);
-        }
-        catch(HttpException e) {
-            this.error("Cannot write CDN configuration", e);
-        }
-        finally {
-            distributionStatus.clear();
-        }
-    }
-
-    @Override
-    public Distribution read(final String origin, final Distribution.Method method) {
-        if(!distributionStatus.containsKey(origin)) {
-            try {
-                this.check();
-                this.message(MessageFormat.format(Locale.localizedString("Reading CDN configuration of {0}", "Status"),
-                        origin));
-
-                final FilesCDNContainer info = this.getClient().getCDNContainerInfo(origin);
-                final Distribution distribution = new Distribution(info.getName(),
-                        new URI(this.getClient().getStorageURL()).getHost(),
-                        method, info.isEnabled(), info.getCdnURL(), info.getSSLURL(), info.getStreamingURL(),
-                        info.isEnabled() ? Locale.localizedString("CDN Enabled", "Mosso") : Locale.localizedString("CDN Disabled", "Mosso"),
-                        info.getRetainLogs()) {
-                    @Override
-                    public String getLoggingTarget() {
-                        return ".CDN_ACCESS_LOGS";
-                    }
-                };
-                final FilesContainerMetaData metadata = this.getClient().getContainerMetaData(origin);
-                if(metadata.getMetaData().containsKey("Web-Index")) {
-                    distribution.setDefaultRootObject(metadata.getMetaData().get("Web-Index"));
-                }
-                distribution.setContainers(Collections.singletonList(".CDN_ACCESS_LOGS"));
-                distributionStatus.put(origin, distribution);
-            }
-            catch(HttpException e) {
-                log.warn(e.getMessage());
-                // Not found.
-                distributionStatus.put(origin, new Distribution(null, origin, method, false, null, Locale.localizedString("CDN Disabled", "Mosso")));
-            }
-            catch(IOException e) {
-                this.error("Cannot read CDN configuration", e);
-            }
-            catch(URISyntaxException e) {
-                this.error("Cannot read CDN configuration", e);
-            }
-        }
-        if(distributionStatus.containsKey(origin)) {
-            return distributionStatus.get(origin);
-        }
-        return new Distribution(origin, method);
-    }
-
-    @Override
-    public void invalidate(final String origin, final Distribution.Method method, final List<Path> files, final boolean recursive) {
-        try {
-            this.check();
-            this.message(MessageFormat.format(Locale.localizedString("Writing CDN configuration of {0}", "Status"),
-                    origin));
-            for(Path file : files) {
-                if(file.isContainer()) {
-                    this.getClient().purgeCDNContainer(origin, null);
-                }
-                else {
-                    this.getClient().purgeCDNObject(origin, file.getKey(), null);
-                }
-            }
-        }
-        catch(IOException e) {
-            this.error("Cannot write CDN configuration", e);
-        }
-        catch(HttpException e) {
-            this.error("Cannot write CDN configuration", e);
-        }
-        finally {
-            distributionStatus.clear();
-        }
-    }
-
-    @Override
-    public boolean isInvalidationSupported(final Distribution.Method method) {
-        return true;
-    }
-
-    @Override
-    public boolean isDefaultRootSupported(final Distribution.Method method) {
-        return true;
-    }
-
-    @Override
-    public boolean isLoggingSupported(final Distribution.Method method) {
-        return method.equals(Distribution.DOWNLOAD);
-    }
-
-    @Override
-    public boolean isAnalyticsSupported(final Distribution.Method method) {
-        return this.isLoggingSupported(method);
-    }
-
-    @Override
-    public boolean isCnameSupported(final Distribution.Method method) {
-        return false;
-    }
-
-    @Override
-    public Protocol getProtocol() {
-        return getHost().getProtocol();
-    }
-
-    @Override
-    public List<Distribution.Method> getMethods(final String container) {
-        if(!this.isCDNSupported()) {
-            return Collections.emptyList();
-        }
-        return Arrays.asList(Distribution.DOWNLOAD);
-    }
-
-    public String getName() {
-        return Locale.localizedString("Akamai", "Mosso");
-    }
-
-    @Override
-    public String getName(final Distribution.Method method) {
-        return this.getName();
-    }
-
-    @Override
-    public void clear() {
-        distributionStatus.clear();
-    }
-
-    @Override
-    public IdentityConfiguration iam() {
-        return new DefaultCredentialsIdentityConfiguration(host);
-    }
+ 
 }

@@ -197,6 +197,29 @@ public abstract class PathFactory<S extends Session> {
                             }
                         });
                         break;
+					case swiftkeystone:
+					register(p, new PathFactory<CFSession>() {
+						@Override
+						protected Path create(CFSession session, String path, int type) {
+							return new CFPath(session, path, type);
+						}
+
+						@Override
+						protected Path create(CFSession session, String parent, String name, int type) {
+							return new CFPath(session, parent, name, type);
+						}
+
+						@Override
+						protected Path create(CFSession session, String parent, Local file) {
+							return new CFPath(session, parent, file);
+						}
+
+						@Override
+						protected <T> Path create(CFSession session, T dict) {
+							return new CFPath(session, dict);
+						}
+					});
+					break;
                     default:
                         throw new FactoryException(String.format("No factory for protocol %s", p));
                 }

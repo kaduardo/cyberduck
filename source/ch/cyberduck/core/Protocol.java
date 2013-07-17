@@ -852,6 +852,10 @@ public abstract class Protocol {
         public String getPasswordPlaceholder() {
             return Locale.localizedString("API Access Key", "Mosso");
         }
+		@Override
+		public String getContext() {
+        return "v2.0";
+		}
     };
 	public static final Protocol SWIFT_KEYSTONE_FEDERATED = new Protocol() {
         @Override

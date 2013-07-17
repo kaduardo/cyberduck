@@ -2512,8 +2512,9 @@ namespace Ch.Cyberduck.Ui.Controller
             
             _session = SessionFactory.createSession(host);
             
+            //Checa protocolo
             if (String.Compare(host.getProtocol().getIdentifier(), "swiftkeystonefederated") == 0) {
-                //Pegando lista de idps
+                //pega lista de idps
                 java.util.List idPList = _session.getIdps();
                 
                 //Exibindo Dialog
