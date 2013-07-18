@@ -61,7 +61,7 @@ public final class ProtocolFactory {
         register(Protocol.CLOUDFILES);
         register(Protocol.SWIFT);
 		register(Protocol.SWIFT_KEYSTONE);
-		register(Protocol.SWIFT_KEYSTONE_FEDERATED);
+		register(Protocol.SWIFT_FEDERATED_KEYSTONE);
 	
         // Load thirdparty protocols
         final Local profiles = LocalFactory.createLocal(Preferences.instance().getProperty("application.support.path"), "Profiles");

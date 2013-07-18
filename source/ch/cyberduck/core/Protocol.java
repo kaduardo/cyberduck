@@ -234,7 +234,7 @@ public abstract class Protocol {
         googlestorage,
         swift,
 		swiftkeystone,
-		swiftkeystonefederated,
+		swiftfederatedkeystone,
         dav
     }
 
@@ -857,20 +857,20 @@ public abstract class Protocol {
         return "v2.0";
 		}
     };
-	public static final Protocol SWIFT_KEYSTONE_FEDERATED = new Protocol() {
+	public static final Protocol SWIFT_FEDERATED_KEYSTONE = new Protocol() {
         @Override
         public String getName() {
-            return Locale.localizedString("SwiftKeystoneFederated", "Mosso");
+            return Locale.localizedString("SwiftFederatedKeystone", "Mosso");
         }
 
         @Override
         public String getDescription() {
-            return Locale.localizedString("Swift (Keystone Federated)", "Mosso");
+            return Locale.localizedString("Swift (Federated Keystone)", "Mosso");
         }
 
         @Override
         public String getIdentifier() {
-            return "swiftkeystonefederated";
+            return "swiftfederatedkeystone";
         }
 
         @Override
@@ -907,6 +907,10 @@ public abstract class Protocol {
         public String getPasswordPlaceholder() {
             return Locale.localizedString("API Access Key", "Mosso");
         }
+		@Override
+		public String getContext() {
+        return "v2.0";
+		}
     };
 
 	}

@@ -20,6 +20,7 @@ package ch.cyberduck.core;
 
 import ch.cyberduck.core.cf.CFSession;
 import ch.cyberduck.core.cf.CFSessionKeystone;
+import ch.cyberduck.core.cf.CFSessionFederatedKeystone;
 import ch.cyberduck.core.dav.DAVSession;
 import ch.cyberduck.core.ftp.FTPSession;
 import ch.cyberduck.core.gstorage.GSSession;
@@ -99,23 +100,18 @@ public abstract class SessionFactory {
 						 factories.put(p, new SessionFactory() {
                             @Override
                             protected Session create(Host h) {
-                                //throw new FactoryException(String.format("No factory for protocol %s", p));
-								//return new CFSession(h);
-								return new CFSessionKeystone(h);
+                                return new CFSessionKeystone(h);
                             }
                         });
 					break;
-					case swiftkeystonefederated:
-					factories.put(p, new SessionFactory() {
-						@Override
-						protected Session create(Host h) {
-							return new CFSessionKeystone(h);
-							//throw new FactoryException(String.format("No factory for protocol %s", p));
-							//return new CFSession(h);
-							//return new CFSessionKeystoneFederated(h);
-						}
-					});
-				   break;
+					case swiftfederatedkeystone:
+						factories.put(p, new SessionFactory() {
+							@Override
+							protected Session create(Host h) {
+								return new CFSessionFederatedKeystone(h);
+							}
+						});
+					break;
                     default:
                         throw new FactoryException(String.format("No factory for protocol %s", p));
                 }

@@ -699,9 +699,9 @@ namespace Ch.Cyberduck {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap swiftkeystone {
+        internal static System.Drawing.Bitmap swiftfederatedkeystone {
             get {
-                object obj = ResourceManager.GetObject("swiftkeystone", resourceCulture);
+                object obj = ResourceManager.GetObject("swiftfederatedkeystone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -709,9 +709,9 @@ namespace Ch.Cyberduck {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap swiftkeystonefederated {
+        internal static System.Drawing.Bitmap swiftkeystone {
             get {
-                object obj = ResourceManager.GetObject("swiftkeystonefederated", resourceCulture);
+                object obj = ResourceManager.GetObject("swiftkeystone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

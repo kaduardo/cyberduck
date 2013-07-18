@@ -134,6 +134,15 @@ public abstract class AbstractLoginController implements LoginController {
         this.prompt(protocol, credentials, title, reason, Preferences.instance().getBoolean("connection.login.useKeychain"),
                 protocol.equals(Protocol.SFTP), protocol.isAnonymousConfigurable());
     }
+	
+	
+	public String prompt(String title, String definition, String group, java.util.List lista){
+		return "error";
+	}
+	
+	public void prompt(String message){
+		
+	}
 
     @Override
     public abstract void prompt(final Protocol protocol, final Credentials credentials,

@@ -125,6 +125,6 @@ public interface LoginController {
                 final boolean enableKeychain, final boolean enablePublicKey, boolean enableAnonymous) throws LoginCanceledException;
 
 	String prompt(String title, String definition, String group, java.util.List lista);
-//	
+	
 	void prompt(String message);
 }

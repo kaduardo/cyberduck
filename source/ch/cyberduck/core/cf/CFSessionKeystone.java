@@ -77,28 +77,16 @@ public class CFSessionKeystone extends CFSession implements DistributionConfigur
 
     @Override
     protected void connect() throws IOException {
-       //this.message(Locale.localizedString("jhjhjhj", "Credentials"));
-	  // this.login();
-	  // this.message(Locale.localizedString("jhjh333jhj", "Credentials"));
-		LoginController login = LoginControllerFactory.get(this);
-		
-		List<String> lista = new ArrayList<String>();
-		lista.add("ufrn");
-		lista.add("ufcg");
-		lista.add("ufrj");
-		
-		String retorno = login.prompt("IDP Server","choose:","Server",lista);
-		
-		login.prompt(retorno);
-         	if(this.isConnected()) {
-            return;
-        }
         this.client = new FilesClientKeystone(this.http(), null, null, null, null, this.timeout());
         this.fireConnectionWillOpenEvent();
 
         // Configure for authentication URL
         this.configure();
-
+		
+		if(this.isConnected()) {
+            return;
+        }
+      
         // Prompt the login credentials first
         this.login();
 

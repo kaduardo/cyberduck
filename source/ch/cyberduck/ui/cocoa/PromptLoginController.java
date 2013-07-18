@@ -371,4 +371,5 @@ public final class PromptLoginController extends AbstractLoginController {
             throw new LoginCanceledException();
         }
     }
+	
 }
