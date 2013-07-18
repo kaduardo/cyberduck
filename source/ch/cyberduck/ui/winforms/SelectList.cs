@@ -9,20 +9,28 @@ using System.Windows.Forms;
 
 namespace Ch.Cyberduck.ui.winforms
 {
-    public partial class SelectIdp : Form
+    public partial class SelectList : Form
     {
-        String idPServer = "";
+        String selected = "";
 
-        public String IdPServer
+        public String Selected
         {
-            get { return idPServer; }
-            set { idPServer = value; }
+            get { return selected; }
+            set { selected = value; }
         }
-        public SelectIdp(java.util.List idPList)
+        public SelectList(String title, String description, String group, java.util.List idPList)
         {
 
             InitializeComponent();
 
+
+
+
+            this.groupBox1.Text = group;
+            this.Text = title;
+            this.label3.Text = description;
+
+            
             this.listView1.View = View.Details;
             this.listView1.AllowColumnReorder = true;
             this.listView1.FullRowSelect = true;
@@ -43,7 +51,7 @@ namespace Ch.Cyberduck.ui.winforms
         {
             if (listView1.SelectedItems.Count != 0)
             {
-                idPServer = listView1.SelectedItems[0].Text;
+                selected = listView1.SelectedItems[0].Text;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

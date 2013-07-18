@@ -256,12 +256,11 @@
     <Compile Include="ui\winforms\CreateSymlinkPromptForm.Designer.cs">
       <DependentUpon>CreateSymlinkPromptForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ui\winforms\SelectIdp.cs">
+    <Compile Include="ui\winforms\SelectList.cs">
       <SubType>Form</SubType>
-      <Generator>OK</Generator>
     </Compile>
-    <Compile Include="ui\winforms\SelectIdp.Designer.cs">
-      <DependentUpon>SelectIdp.cs</DependentUpon>
+    <Compile Include="ui\winforms\SelectList.Designer.cs">
+      <DependentUpon>SelectList.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\winforms\GotoPromptForm.cs">
       <SubType>Form</SubType>
@@ -347,8 +346,8 @@
       <DependentUpon>PromptForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ui\winforms\SelectIdp.resx">
-      <DependentUpon>SelectIdp.cs</DependentUpon>
+    <EmbeddedResource Include="ui\winforms\SelectList.resx">
+      <DependentUpon>SelectList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\winforms\taskdialog\TaskDialogForm.resx">
       <DependentUpon>TaskDialogForm.cs</DependentUpon>

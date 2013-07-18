@@ -1,6 +1,6 @@
 ﻿namespace Ch.Cyberduck.ui.winforms
 {
-    partial class SelectIdp
+    partial class SelectList
     {
         /// <summary>
         /// Required designer variable.

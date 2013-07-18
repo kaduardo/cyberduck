@@ -163,6 +163,22 @@ namespace Ch.Cyberduck.Ui.Controller
             prompt(protocol, credentials, title, reason, true, protocol.equals(Protocol.SFTP), true);
         }
 
+        public override string prompt(String title, String definition, String group, java.util.List lista)
+        {
+            //Exibindo Dialog
+            ui.winforms.SelectList dlgSelect = new ui.winforms.SelectList(title,definition,group,lista);
+            dlgSelect.StartPosition = FormStartPosition.CenterParent;
+            DialogResult result = dlgSelect.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return null;
+            }
+
+            return dlgSelect.Selected;
+        }
+        public override void prompt(String message) {
+            System.Windows.Forms.MessageBox.Show(message);
+        }
         public override void prompt(Protocol protocol, Credentials credentials,
                                     String title, String reason,
                                     bool enableKeychain, bool enablePublicKey, bool enableAnonymous)
@@ -173,7 +189,7 @@ namespace Ch.Cyberduck.Ui.Controller
             _protocol = protocol;
             _credentials = credentials;
             _enableKeychain = enableKeychain;
-            _enablePublicKey = enablePublicKey;
+            _enablePublicKey = enablePublicKey;//
             _enableAnonymous = enableAnonymous;
 
             _view.Title = Locale.localizedString(title, "Credentials");
@@ -189,17 +205,18 @@ namespace Ch.Cyberduck.Ui.Controller
             Update();
 
             AsyncController.AsyncDelegate d = delegate
+            {
+                if (DialogResult.Cancel == _view.ShowDialog(_browser.View))
                 {
-                    if (DialogResult.Cancel == _view.ShowDialog(_browser.View))
-                    {
-                        throw new LoginCanceledException();
-                    }
-                    credentials.setSaved(_view.SavePasswordState);
-                    credentials.setUsername(Utils.SafeString(_view.Username));
-                    credentials.setPassword(Utils.SafeString(_view.Password));
-                };
+                    throw new LoginCanceledException();
+                }
+                credentials.setSaved(_view.SavePasswordState);
+                credentials.setUsername(Utils.SafeString(_view.Username));
+                credentials.setPassword(Utils.SafeString(_view.Password));
+            };
             _browser.Invoke(d);
         }
+
 
         private void InitEventHandlers()
         {

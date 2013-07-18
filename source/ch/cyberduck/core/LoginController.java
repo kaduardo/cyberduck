@@ -17,7 +17,7 @@ package ch.cyberduck.core;
  *  Bug fixes, suggestions and comments should be sent to:
  *  dkocher@cyberduck.ch
  */
-
+import java.util.*;
 public interface LoginController {
 
     /**
@@ -123,4 +123,8 @@ public interface LoginController {
     void prompt(final Protocol protocol, final Credentials credentials,
                 final String title, final String reason,
                 final boolean enableKeychain, final boolean enablePublicKey, boolean enableAnonymous) throws LoginCanceledException;
+
+	String prompt(String title, String definition, String group, java.util.List lista);
+//	
+	void prompt(String message);
 }

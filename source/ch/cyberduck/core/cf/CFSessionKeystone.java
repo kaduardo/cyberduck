@@ -18,7 +18,7 @@ package ch.cyberduck.core.cf;
  * Bug fixes, suggestions and comments should be sent to:
  * dkocher@cyberduck.ch
  */
-
+import ch.cyberduck.core.*;
 import ch.cyberduck.core.ConnectionCanceledException;
 import ch.cyberduck.core.Credentials;
 import ch.cyberduck.core.Host;
@@ -45,6 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.rackspacecloud.client.cloudfiles.FilesCDNContainer;
@@ -76,7 +77,20 @@ public class CFSessionKeystone extends CFSession implements DistributionConfigur
 
     @Override
     protected void connect() throws IOException {
-        if(this.isConnected()) {
+       //this.message(Locale.localizedString("jhjhjhj", "Credentials"));
+	  // this.login();
+	  // this.message(Locale.localizedString("jhjh333jhj", "Credentials"));
+		LoginController login = LoginControllerFactory.get(this);
+		
+		List<String> lista = new ArrayList<String>();
+		lista.add("ufrn");
+		lista.add("ufcg");
+		lista.add("ufrj");
+		
+		String retorno = login.prompt("IDP Server","choose:","Server",lista);
+		
+		login.prompt(retorno);
+         	if(this.isConnected()) {
             return;
         }
         this.client = new FilesClientKeystone(this.http(), null, null, null, null, this.timeout());
@@ -141,7 +155,7 @@ public class CFSessionKeystone extends CFSession implements DistributionConfigur
                 controller.fail(host.getProtocol(), credentials);
                 this.login();
             }
-        }
+        }//
         catch(HttpException e) {
             IOException failure = new IOException(e.getMessage());
             failure.initCause(e);

@@ -2511,12 +2511,13 @@ namespace Ch.Cyberduck.Ui.Controller
             }
             
             _session = SessionFactory.createSession(host);
-            
+
+            /*
             //Checa protocolo
             if (String.Compare(host.getProtocol().getIdentifier(), "swiftkeystonefederated") == 0) {
                 //pega lista de idps
                 java.util.List idPList = _session.getIdps();
-                
+                //
                 //Exibindo Dialog
                 ui.winforms.SelectIdp dlgSelectIdP = new ui.winforms.SelectIdp(idPList);
                 dlgSelectIdP.StartPosition = FormStartPosition.CenterParent;
@@ -2527,7 +2528,7 @@ namespace Ch.Cyberduck.Ui.Controller
                 }
 
                 System.Windows.Forms.MessageBox.Show(dlgSelectIdP.IdPServer);   
-            }
+            }*/
             SetWorkdir(null);
             View.SelectedEncoding = _session.getEncoding();
             _session.addProgressListener(_progress = new ProgessListener(this));
