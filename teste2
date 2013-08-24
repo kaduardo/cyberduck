@@ -2,7 +2,7 @@
 revision:
      [echo] Calculating revision...
      [echo] _REVISION_=11012
-     [echo] Build number 167
+     [echo] Build number 176
 
 version:
 
@@ -30,7 +30,7 @@ build:
   [msbuild] [Microsoft .NET Framework, version 4.0.30319.18052]
   [msbuild] Copyright (C) Microsoft Corporation. All rights reserved.
   [msbuild] 
-  [msbuild] Build started 24/08/2013 11:32:38.
+  [msbuild] Build started 24/08/2013 12:58:56.
   [msbuild] Project "C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj" on node 1 (Clean;Build target(s)).
   [msbuild] CoreClean:
   [msbuild]   Deleting file "C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\obj\x86\Release\Cyberduck.csprojResolveAssemblyReference.cache".
@@ -201,7 +201,7 @@ build:
   [msbuild]     21 Warning(s)
   [msbuild]     0 Error(s)
   [msbuild] 
-  [msbuild] Time Elapsed 00:00:12.78
+  [msbuild] Time Elapsed 00:00:10.32
 
 BUILD SUCCESSFUL
-Total time: 16 seconds
+Total time: 14 seconds

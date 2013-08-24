@@ -178,7 +178,11 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 				return;
 			}
 			controller.prompt(selectedTenant);
-		
+			
+			String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
+			
+			controller.prompt("Scopedtoken:  " + scopedToken);
+			
 		}
 		catch(Exception e){
 			this.message(Locale.localizedString("ERROR: " + e.getMessage() , "Credentials"));
@@ -191,7 +195,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 		}
 		
 	
-
+/*
 		try {
             if(!client.login()) {
                 this.message(Locale.localizedString("Login failed", "Credentials"));
@@ -203,7 +207,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
             IOException failure = new IOException(e.getMessage());
             failure.initCause(e);
             throw failure;
-        }
+        }*/
     }
 /*
 	private void naoesqucer(){
