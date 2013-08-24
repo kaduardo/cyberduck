@@ -195,7 +195,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 		}
 		
 	
-/*
+
 		try {
             if(!client.login()) {
                 this.message(Locale.localizedString("Login failed", "Credentials"));
@@ -207,7 +207,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
             IOException failure = new IOException(e.getMessage());
             failure.initCause(e);
             throw failure;
-        }*/
+        }
     }
 /*
 	private void naoesqucer(){
