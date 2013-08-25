@@ -154,18 +154,18 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
             
 			String[] idpRequest = client.getIdPRequest(selectedRealm); 
 			
-			controller.prompt(idpRequest[0] + "-------" + idpRequest[1] );
+		//	controller.prompt(idpRequest[0] + "-------" + idpRequest[1] );
 			
 			
 			String idpResponse = client.getIdPResponse(idpRequest[0],idpRequest[1]);
 		
 			
-			controller.prompt(idpResponse);
+			//controller.prompt(idpResponse);
 		
 			String unscopedTokenJson = client.getUnscopedToken(idpResponse,selectedRealm);
 	
 			
-			controller.prompt(unscopedTokenJson);
+			//controller.prompt(unscopedTokenJson);
 	
 	
 			this.message(Locale.localizedString("Getting Tenant List" , "Credentials"));
@@ -177,11 +177,12 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 			if(selectedTenant.equals("")){
 				return;
 			}
-			controller.prompt(selectedTenant);
+			//controller.prompt(selectedTenant);
 			
 			String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
 			
-			controller.prompt("Scopedtoken:  " + scopedToken);
+			client.setAuthToken(scopedToken);
+		//	controller.prompt("Scopedtoken:  " + scopedToken);
 			
 		}
 		catch(Exception e){
