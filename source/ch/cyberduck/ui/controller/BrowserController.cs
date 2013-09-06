@@ -1441,6 +1441,13 @@ namespace Ch.Cyberduck.Ui.Controller
         public void Download(IList<Path> downloads, Local downloadFolder)
         {
             Session session = getTransferSession();
+
+            /*if (session == null) System.Windows.Forms.MessageBox.Show("SESSION IS NULL");
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("SESSION IS NOT NULL");
+            
+            }*/
             List roots = new Collection();
             foreach (Path selected in downloads)
             {
@@ -1448,6 +1455,8 @@ namespace Ch.Cyberduck.Ui.Controller
                 path.setLocal(LocalFactory.createLocal(downloadFolder, path.getName()));
                 roots.add(path);
             }
+            //System.Windows.Forms.MessageBox.Show("DOWNLOAD TRANSFER");
+           
             Transfer q = new DownloadTransfer(roots);
             transfer(q);
         }
@@ -1680,7 +1689,7 @@ namespace Ch.Cyberduck.Ui.Controller
             return IsMounted();
         }
 
-        private void View_Upload()
+        private void View_Upload() //andre
         {
             // Due to the limited functionality of the OpenFileDialog class it is
             // currently not possible to select a folder. May be we should provide
@@ -2228,7 +2237,10 @@ namespace Ch.Cyberduck.Ui.Controller
         /// <param name="transfer"></param>
         public void transfer(Transfer transfer)
         {
+            //System.Windows.Forms.MessageBox.Show("iniciando transfer");
+           
             this.transfer(transfer, getSession().getMaxConnections() == 1);
+       
         }
 
         /// <summary>
@@ -2238,6 +2250,7 @@ namespace Ch.Cyberduck.Ui.Controller
         /// <param name="destination"></param>
         public void transfer(Transfer transfer, bool browser)
         {
+           // System.Windows.Forms.MessageBox.Show("iniciando transfer 2");
             this.transfer(transfer, browser, new LazyTransferPrompt(this, transfer));
         }
 
@@ -2261,20 +2274,24 @@ namespace Ch.Cyberduck.Ui.Controller
         /// <param name="prompt"></param>
         public void transfer(Transfer transfer, bool browser, TransferPrompt prompt)
         {
+            //System.Windows.Forms.MessageBox.Show("iniciando transfer 3");
             this.transfer(transfer, Utils.ConvertFromJavaList<Path>(transfer.getRoots(), null), browser, prompt);
         }
 
         public void transfer(Transfer transfer, IList<Path> changed, bool browser, TransferPrompt prompt)
         {
+            //System.Windows.Forms.MessageBox.Show("iniciando transfer 4 ");
             transfer.addListener(new ReloadTransferAdapter(this, transfer, changed));
             if (browser)
             {
+              //  System.Windows.Forms.MessageBox.Show("oldbrowser");
                 transfer.addListener(new ProgressTransferAdapter(this, transfer));
                 Background(new TransferBrowserBackgroundAction(this, prompt, transfer));
             }
             else
             {
                 // in new browser
+               // System.Windows.Forms.MessageBox.Show("novo browser");//andre
                 TransferController.Instance.StartTransfer(transfer);
             }
         }
@@ -2285,6 +2302,8 @@ namespace Ch.Cyberduck.Ui.Controller
         /// <returns>The session to be used for file transfers. Null if not mounted</returns>
         public Session getTransferSession()
         {
+          //  System.Windows.Forms.MessageBox.Show("get session");//andre
+          
             return getTransferSession(false);
         }
 
@@ -2298,9 +2317,17 @@ namespace Ch.Cyberduck.Ui.Controller
             {
                 if (_session.getMaxConnections() == 1)
                 {
+                    //System.Windows.Forms.MessageBox.Show("sessao existente");//
+
+          
                     return _session;
                 }
             }
+            //System.Windows.Forms.MessageBox.Show("problema encontrado");//
+
+
+
+          
             return SessionFactory.createSession(_session.getHost());
         }
 
@@ -3450,7 +3477,7 @@ namespace Ch.Cyberduck.Ui.Controller
         private class MountAction : BrowserBackgroundAction
         {
             private readonly Host _host;
-            private readonly Session _session;
+            private readonly Session _session;// sessao logada andre
             private Path _mount;
 
             public MountAction(BrowserController controller,

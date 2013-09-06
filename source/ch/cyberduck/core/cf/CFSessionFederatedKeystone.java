@@ -134,56 +134,68 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
         }
         return authentication.toString();
     }
-
+	
+	
+	public boolean debug() throws IOException {
+		final FilesClientFederatedKeystone client = this.getClient();
+        
+		//String teste = client.getValidScopedToken();
+		return client.getValidScopedToken();
+	}
     @Override
     protected void login(final LoginController controller, final Credentials credentials) throws IOException {
         final FilesClientFederatedKeystone client = this.getClient();
         client.setUserName(credentials.getUsername());
         client.setPassword(credentials.getPassword());
 		try{
-			this.message(Locale.localizedString("Getting IdP List", "Credentials"));
-                
-			List<String> realms = (LinkedList<String>) client.getRealmList();
-			//call dialog
-			String selectedRealm = controller.prompt("IdP Server","Choose a IdP server:","Servers",realms);
-			if(selectedRealm.equals("")){
-				return;
-			}
-			
-			this.message(Locale.localizedString("Connecting to" + selectedRealm , "Credentials"));
-            
-			String[] idpRequest = client.getIdPRequest(selectedRealm); 
-			
-		//	controller.prompt(idpRequest[0] + "-------" + idpRequest[1] );
-			
-			
-			String idpResponse = client.getIdPResponse(idpRequest[0],idpRequest[1]);
 		
+			//prompt(client.getValidScopedToken().tostring());
+			if(client.getValidScopedToken() == false){
+				this.message(Locale.localizedString("Getting IdP List", "Credentials"));
+					
+				List<String> realms = (LinkedList<String>) client.getRealmList();
+				//call dialog
+				String selectedRealm = controller.prompt("IdP Server","Choose a IdP server:","Servers",realms);
+				if(selectedRealm.equals("")){
+					return;
+				}
+				
+				this.message(Locale.localizedString("Connecting to" + selectedRealm , "Credentials"));
+				
+				String[] idpRequest = client.getIdPRequest(selectedRealm); 
+				
+			//	controller.prompt(idpRequest[0] + "-------" + idpRequest[1] );
+				
+				
+				String idpResponse = client.getIdPResponse(idpRequest[0],idpRequest[1]);
 			
-			//controller.prompt(idpResponse);
+				
+				//controller.prompt(idpResponse);
+			
+				String unscopedTokenJson = client.getUnscopedToken(idpResponse,selectedRealm);
 		
-			String unscopedTokenJson = client.getUnscopedToken(idpResponse,selectedRealm);
-	
-			
-			//controller.prompt(unscopedTokenJson);
-	
-	
-			this.message(Locale.localizedString("Getting Tenant List" , "Credentials"));
-            
-			List<String> tenants = (LinkedList<String>) client.getTenantsName();
-			
-			//call dialog
-			String selectedTenant = controller.prompt("Tenants","Choose a Tenant:","Tenants",tenants);
-			if(selectedTenant.equals("")){
-				return;
+				
+				//controller.prompt(unscopedTokenJson);
+		
+		
+				this.message(Locale.localizedString("Getting Tenant List" , "Credentials"));
+				
+				List<String> tenants = (LinkedList<String>) client.getTenantsName();
+				
+				//call dialog
+				String selectedTenant = controller.prompt("Tenants","Choose a Tenant:","Tenants",tenants);
+				if(selectedTenant.equals("")){
+					return;
+				}
+				//controller.prompt(selectedTenant);
+				
+				String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
+				
+				//controller.prompt(scopedToken);
+				//client.(scopedToken);
+				//this.login();
+			//	controller.prompt("Scopedtoken:  " + scopedToken);
 			}
-			//controller.prompt(selectedTenant);
-			
-			String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
-			
-			client.setAuthToken(scopedToken);
-		//	controller.prompt("Scopedtoken:  " + scopedToken);
-			
 		}
 		catch(Exception e){
 			this.message(Locale.localizedString("ERROR: " + e.getMessage() , "Credentials"));
@@ -197,7 +209,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 		
 	
 
-		try {
+		/*try {
             if(!client.login()) {
                 this.message(Locale.localizedString("Login failed", "Credentials"));
                 controller.fail(host.getProtocol(), credentials);
@@ -208,7 +220,7 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
             IOException failure = new IOException(e.getMessage());
             failure.initCause(e);
             throw failure;
-        }
+        }*/
     }
 /*
 	private void naoesqucer(){
