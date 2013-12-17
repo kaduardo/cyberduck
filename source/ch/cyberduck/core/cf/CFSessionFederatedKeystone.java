@@ -151,50 +151,58 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 		
 			//prompt(client.getValidScopedToken().tostring());
 			if(client.getValidScopedToken() == false){
-				this.message(Locale.localizedString("Getting IdP List", "Credentials"));
+			String selectedRealm = "";
+			String selectedTenant = "";
+				this.message(Locale.localizedString("Getting IdP List", "Credentials"));	
 					
-				List<String> realms = (LinkedList<String>) client.getRealmList();
-				//call dialog
-				String selectedRealm = controller.prompt("IdP Server","Choose a IdP server:","Servers",realms);
-				if(selectedRealm.equals("")){
-					return;
+				try{
+					List<String> realms = (LinkedList<String>) client.getRealmList();
+					selectedRealm = controller.prompt("IdP Server","Choose a IdP server:","Servers",realms);
+					if(selectedRealm.equals("")){
+						return;
+					}
 				}
-				
+				catch(Exception e){
+					throw new IOException("Error then get IdP List");
+				}
+					
+
 				this.message(Locale.localizedString("Connecting to" + selectedRealm , "Credentials"));
 				
-				String[] idpRequest = client.getIdPRequest(selectedRealm); 
-				
-			//	controller.prompt(idpRequest[0] + "-------" + idpRequest[1] );
-				
-				
-				String idpResponse = client.getIdPResponse(idpRequest[0],idpRequest[1]);
-			
-				
-				//controller.prompt(idpResponse);
-			
-				String unscopedTokenJson = client.getUnscopedToken(idpResponse,selectedRealm);
-		
-				
-				//controller.prompt(unscopedTokenJson);
-		
-		
-				this.message(Locale.localizedString("Getting Tenant List" , "Credentials"));
-				
-				List<String> tenants = (LinkedList<String>) client.getTenantsName();
-				
-				//call dialog
-				String selectedTenant = controller.prompt("Tenants","Choose a Tenant:","Tenants",tenants);
-				if(selectedTenant.equals("")){
-					return;
+				try{
+					String[] idpRequest = client.getIdPRequest(selectedRealm); 	
+					String idpResponse = client.getIdPResponse(idpRequest[0],idpRequest[1]);
+					String unscopedTokenJson = client.getUnscopedToken(idpResponse,selectedRealm);
 				}
-				//controller.prompt(selectedTenant);
+				catch(Exception e){
+					throw new IOException("Error then get Unscoped Token");
+				}
 				
-				String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
+		
+				try{
+					this.message(Locale.localizedString("Getting Tenant List" , "Credentials"));					
+					List<String> tenants = (LinkedList<String>) client.getTenantsName();
+					selectedTenant = controller.prompt("Tenants","Choose a Tenant:","Tenants",tenants);
+					if(selectedTenant.equals("")){
+						return;
+					}
+				}
+				catch(Exception e){
+					throw new IOException("Error then get Tenant List");
+				}				
+
+			
+				try{
+					String scopedToken =  client.getScopedToken(client.getUnscopedToken(),selectedTenant);
+				}
+				catch(Exception e){
+					throw new IOException("Error then get Unscoped Token JSON");
+				}
 				
-				//controller.prompt(scopedToken);
-				//client.(scopedToken);
-				//this.login();
-			//	controller.prompt("Scopedtoken:  " + scopedToken);
+			
+			}
+			else{
+				throw new IOException("Scoped Token is invalid");		
 			}
 		}
 		catch(Exception e){
@@ -209,32 +217,6 @@ public class CFSessionFederatedKeystone extends CFSessionKeystone implements Dis
 		
 	
 
-		/*try {
-            if(!client.login()) {
-                this.message(Locale.localizedString("Login failed", "Credentials"));
-                controller.fail(host.getProtocol(), credentials);
-                this.login();
-            }
-        }//
-        catch(HttpException e) {
-            IOException failure = new IOException(e.getMessage());
-            failure.initCause(e);
-            throw failure;
-        }*/
+		
     }
-/*
-	private void naoesqucer(){
-		LoginController login = LoginControllerFactory.get(this);
-		
-		List<String> lista = new ArrayList<String>();
-		lista.add("ufrn");
-		lista.add("ufcg");
-		lista.add("ufrj");
-		
-		String retorno = login.prompt("IDP Server","choose:","Server",lista);
-		
-		login.prompt(retorno);
-
-
-	}*/
 }

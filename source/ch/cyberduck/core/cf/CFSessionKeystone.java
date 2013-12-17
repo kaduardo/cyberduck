@@ -144,9 +144,9 @@ public class CFSessionKeystone extends CFSession implements DistributionConfigur
                 controller.fail(host.getProtocol(), credentials);
                 this.login();
             }
-        }//
+        }
         catch(HttpException e) {
-            IOException failure = new IOException(e.getMessage());
+            IOException failure = new IOException("Error while connecting to the server");
             failure.initCause(e);
             throw failure;
         }

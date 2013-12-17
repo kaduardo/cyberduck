@@ -2,7 +2,7 @@
 revision:
      [echo] Calculating revision...
      [echo] _REVISION_=11012
-     [echo] Build number 181
+     [echo] Build number 219
 
 version:
 
@@ -30,7 +30,7 @@ build:
   [msbuild] [Microsoft .NET Framework, version 4.0.30319.18052]
   [msbuild] Copyright (C) Microsoft Corporation. All rights reserved.
   [msbuild] 
-  [msbuild] Build started 25/08/2013 03:29:34.
+  [msbuild] Build started 05/09/2013 21:10:51.
   [msbuild] Project "C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj" on node 1 (Clean;Build target(s)).
   [msbuild] CoreClean:
   [msbuild]   Deleting file "C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\obj\x86\Release\Cyberduck.csprojResolveAssemblyReference.cache".
@@ -114,8 +114,8 @@ build:
   [msbuild] ui\controller\AsyncController.cs(99,25): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild] ui\controller\MainController.cs(219,17): warning CS0618: 'java.lang.Object.instancehelper_getClass(object)' is obsolete: 'This function will be removed from future versions. Please use extension methods from ikvm.extensions namespace instead.' [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild] ui\controller\BrowserController.cs(1332,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
-  [msbuild] ui\controller\BrowserController.cs(1518,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
-  [msbuild] ui\controller\BrowserController.cs(1530,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
+  [msbuild] ui\controller\BrowserController.cs(1527,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
+  [msbuild] ui\controller\BrowserController.cs(1539,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild] ui\controller\FirefoxStyleRenderer.cs(55,25): warning CS0728: Possibly incorrect assignment to local 'solidBrush' which is the argument to a using or lock statement. The Dispose call or unlocking will happen on the original value of the local. [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild] ui\controller\FirefoxStyleRenderer.cs(59,25): warning CS0728: Possibly incorrect assignment to local 'solidBrush' which is the argument to a using or lock statement. The Dispose call or unlocking will happen on the original value of the local. [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild] ui\winforms\BrowserForm.cs(1101,54): warning CS0168: The variable 'exception' is declared but never used [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
@@ -187,8 +187,8 @@ build:
   [msbuild]   ui\controller\AsyncController.cs(99,25): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild]   ui\controller\MainController.cs(219,17): warning CS0618: 'java.lang.Object.instancehelper_getClass(object)' is obsolete: 'This function will be removed from future versions. Please use extension methods from ikvm.extensions namespace instead.' [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild]   ui\controller\BrowserController.cs(1332,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
-  [msbuild]   ui\controller\BrowserController.cs(1518,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
-  [msbuild]   ui\controller\BrowserController.cs(1530,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
+  [msbuild]   ui\controller\BrowserController.cs(1527,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
+  [msbuild]   ui\controller\BrowserController.cs(1539,13): warning CS0162: Unreachable code detected [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild]   ui\controller\FirefoxStyleRenderer.cs(55,25): warning CS0728: Possibly incorrect assignment to local 'solidBrush' which is the argument to a using or lock statement. The Dispose call or unlocking will happen on the original value of the local. [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild]   ui\controller\FirefoxStyleRenderer.cs(59,25): warning CS0728: Possibly incorrect assignment to local 'solidBrush' which is the argument to a using or lock statement. The Dispose call or unlocking will happen on the original value of the local. [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
   [msbuild]   ui\winforms\BrowserForm.cs(1101,54): warning CS0168: The variable 'exception' is declared but never used [C:\Users\kaduardo\Documents\GitHub\cyberduck\source\ch\cyberduck\Cyberduck.csproj]
@@ -201,7 +201,7 @@ build:
   [msbuild]     21 Warning(s)
   [msbuild]     0 Error(s)
   [msbuild] 
-  [msbuild] Time Elapsed 00:00:27.59
+  [msbuild] Time Elapsed 00:00:16.09
 
 BUILD SUCCESSFUL
-Total time: 39 seconds
+Total time: 20 seconds
